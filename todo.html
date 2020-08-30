@@ -1,0 +1,240 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body {
+	background-image: url(bg1.jpg);
+	text-align: center;
+	font-family: 'Open Sans', sans-serif;
+  
+}
+
+img{
+  margin-top: -40px;
+}
+
+.intro {
+	margin: 30px 0px;
+	font-weight: bold;
+}
+
+h1 {
+	color: #ffffff;
+	text-transform: uppercase;
+	font-weight: 800;
+  font-size: 45px;
+  margin-top: 10px;
+}
+
+p {
+	font-weight: 300;
+  font-size: 25px;
+  margin-left: 70px;
+  margin-right: 70px;
+  padding-left: 100px;
+  padding-right: 100px;
+}
+
+#first {
+	margin-top: 5px;
+	color: #ffb108;
+  
+}
+
+#para{
+  color: #ffb108;
+  margin-top: -10px;
+}
+
+#second {
+	color: #51DF70;
+
+}
+
+#third {
+	color: #025F70;
+	margin-bottom: 30px;
+}
+
+
+#enter {
+	border: none;
+	padding: 5px 10px;
+	border-radius: 10px;
+	color: #FFCD5D;
+	background-color: #03a5c2;
+	transition: all 0.75s ease;
+	-webkit-transition: all 0.75s ease;
+	-moz-transition: all 0.75s ease;
+	-ms-transition: all 0.75s ease;
+	-o-transition: all 0.75 ease;
+	font-weight: normal;
+}
+
+#enter:hover{
+	background-color: #02798F;
+	color: #FFCD5D;
+  
+}
+
+ul {
+	text-align: left;
+	margin-top: 20px;
+}
+
+
+li {
+	list-style: none;
+	padding: 5px 10px;
+	color: #ffffff;
+	text-transform: capitalize;
+	font-weight: 600;
+	border: 2px solid #025f70;
+	border-radius: 5px;
+	margin-bottom: 10px;
+	background: #76CFE0;
+	transition: all 0.75s ease;
+	-webkit-transition: all 0.5s ease;
+	-moz-transition: all 0.5s ease;
+	-ms-transition: all 0.5s ease;
+	-o-transition: all 0.5 ease;
+  margin-left: 200px;
+  margin-right: 300px;
+}
+
+li:hover {
+	background: #63a1ac;
+}
+
+li > button {
+	font-weight: normal;
+	background: none;
+	border: none;
+	float: right;
+	color: #025f70;
+	font-weight: 800;
+}
+
+input {
+	border-radius: 5px;
+	min-width: 65%;
+	padding: 5px;
+	border: none;
+}
+
+
+.done {
+	background: #51DF70 !important;
+	color: #00891E;
+}
+
+.delete {
+	display: none;
+}
+</style>
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="intro col-12">
+        <h1>TO-DO LIST</h1>
+        <img src="li.gif" alt="Paris" style="width:150px">
+				<div>
+					<div class="border1"></div>
+					<div c
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="helpText col-12">
+				<p id="first">Create your list here...</p>
+        <p id ='para'>This will ensure that your tasks are written down all in one place so you don't forget anything important.</p>
+				
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-12">
+				<input id="userInput" type="text" placeholder="Enter here" maxlength="27">
+				<button id="enter">ADD<i class="fas fa-pencil-alt"></i></button>
+			</div>
+		</div>
+
+		<!-- Empty List -->
+		<div class="row">
+			<div class="listItems col-12">
+				<ul class="col-12 offset-0 col-sm-8 offset-sm-2">
+				</ul>
+			</div>
+		</div>
+
+	</div>
+<script>
+var enterButton = document.getElementById("enter");
+var input = document.getElementById("userInput");
+var ul = document.querySelector("ul");
+var item = document.getElementsByTagName("li");
+
+function inputLength(){
+	return input.value.length;
+} 
+
+function listLength(){
+	return item.length;
+}
+
+function createListElement() {
+	var li = document.createElement("li"); // creates an element "li"
+	li.appendChild(document.createTextNode(input.value)); //makes text from input field the li text
+	ul.appendChild(li); //adds li to ul
+	input.value = ""; //Reset text input field
+
+
+	//START STRIKETHROUGH
+	// because it's in the function, it only adds it for new items
+	function crossOut() {
+		li.classList.toggle("done");
+	}
+
+	li.addEventListener("click",crossOut);
+	//END STRIKETHROUGH
+
+
+	// START ADD DELETE BUTTON
+	var dBtn = document.createElement("button");
+	dBtn.appendChild(document.createTextNode("X"));
+	li.appendChild(dBtn);
+	dBtn.addEventListener("click", deleteListItem);
+	// END ADD DELETE BUTTON
+
+
+	//ADD CLASS DELETE (DISPLAY: NONE)
+	function deleteListItem(){
+		li.classList.add("delete")
+	}
+	//END ADD CLASS DELETE
+}
+
+
+function addListAfterClick(){
+	if (inputLength() > 0) { //makes sure that an empty input field doesn't create a li
+		createListElement();
+	}
+}
+
+function addListAfterKeypress(event) {
+	if (inputLength() > 0 && event.which ===13) { //this now looks to see if you hit "enter"/"return"
+		//the 13 is the enter key's keycode, this could also be display by event.keyCode === 13
+		createListElement();
+	} 
+}
+
+
+enterButton.addEventListener("click",addListAfterClick);
+
+input.addEventListener("keypress", addListAfterKeypress);
+
+</script>
+</body>
+</html>
